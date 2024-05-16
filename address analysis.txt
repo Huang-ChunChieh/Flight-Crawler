@@ -1,0 +1,13 @@
+https://www.skyscanner.com.tw/transport/flights/
+tpe/kix/240602/240605/?adultsv2=1
+&cabinclass=economy
+&childrenv2=&inboundaltsenabled=false&outboundaltsenabled=false&preferdirects=false&ref=home&rtn=1
+
+https://www.skyscanner.com.tw/transport/flights/
+tpe/kmj/240602/240605/?adultsv2=1
+&cabinclass=economy
+&childrenv2=&inboundaltsenabled=false&outboundaltsenabled=false&preferdirects=false&ref=home&rtn=1
+#出發地/目的地/出發日期/回程日期/?成人數量&艙等&兒童數量&目的地鄰近機場&出發地鄰近機場&直飛航班&
+#艙等cabinclass 成人數量adultsv2 兒童數量childrenv2
+#新增鄰近機場 出發地outboundaltsenabled  目的地inboundaltsenabled 
+#直飛航班preferdirects
