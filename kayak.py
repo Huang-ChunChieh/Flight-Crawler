@@ -46,7 +46,8 @@ def get_SUG_flight(): #獲取最便宜/超值/最快三項簡易資訊
     result_SUG = browser.find_elements(By.CLASS_NAME,"Hv20-option")
     for z in result_SUG:
         print(z.text)
-    return result_SUG
+    sug_result_message = z.text
+    return sug_result_message
 
 def get_cheapest_result():
     print("最優惠航班資訊")
@@ -57,7 +58,8 @@ def get_cheapest_result():
     result_cheapest = browser.find_elements(By.XPATH,flightInfo_XPATH) #get cheapest flight info
     for j in result_cheapest:
         print(j.text)
-    return result_cheapest
+    cheapest_result_message = j.text
+    return cheapest_result_message
 
 def get_best_result():
     print("最佳航班資訊")
@@ -68,7 +70,8 @@ def get_best_result():
     result_best = browser.find_elements(By.XPATH,flightInfo_XPATH) #get best flight info
     for i in result_best:
         print(i.text)
-    return result_best
+    best_result_message = i.text
+    return best_result_message
 
 
 def get_fast_result():
@@ -80,7 +83,8 @@ def get_fast_result():
     result_fast = browser.find_elements(By.XPATH,flightInfo_XPATH) #get fast flight info
     for k in result_fast:
         print(k.text)
-    return result_fast
+    fast_result_message = k.text
+    return fast_result_message
 
 def lineNotify(token, msg):
     headers = {
@@ -93,19 +97,18 @@ def lineNotify(token, msg):
     return r.status_code
 
 def main():
-    get_SUG_flight()
+    SUG_flight_result = get_SUG_flight()
+    #cheapest_flight_result = get_cheapest_result()
+    #best_flight_result = get_best_result()
+    #fast_flight_result = get_fast_result()
+    lineNotify(token, SUG_flight_result)
     sleep(2)
-    #get_cheapest_result()
+    #lineNotify(token, cheapest_flight_result)
     #sleep(2)
-    #get_best_result()
+    #lineNotify(token, best_flight_result)
     #sleep(2)
-    #get_fast_result()
+    #lineNotify(token, fast_flight_result)
     #sleep(2)
-    browser.quit()
-    return get_SUG_flight#,get_cheapest_result,get_best_result,get_fast_result
 
-result = str(main())
-message = "".join(result)
-print(message)
 token = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
-lineNotify(token, message)
+main()
