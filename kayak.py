@@ -2,7 +2,6 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 from time import sleep
-from bs4 import BeautifulSoup
 import requests
 
 depart_city = "TPE" #出發地
@@ -86,7 +85,7 @@ def get_best_result():
     result_best = browser.find_elements(By.XPATH,flightInfo_XPATH) #get best flight info
     for i in result_best:
         print(i.text)
-    best_result_message = "最佳航班資訊\n==== ==== ====\n" + i.text + "詳細資訊歡迎點擊下方連結\n" + url_bestflight
+    best_result_message = "超值航班資訊\n==== ==== ====\n" + i.text + "詳細資訊歡迎點擊下方連結\n" + url_bestflight
     return best_result_message
 
 
@@ -113,20 +112,20 @@ def lineNotify(token, msg):
     return r.status_code
 
 def main():
-    # sug_flight_result = get_SUG_flight()
-    # cheapest_flight_result = get_cheapest_result()
-    # best_flight_result = get_best_result()
-    # fast_flight_result = get_fast_result()
+    sug_flight_result = get_SUG_flight()
+    cheapest_flight_result = get_cheapest_result()
+    best_flight_result = get_best_result()
+    fast_flight_result = get_fast_result()
     lineNotify(token, search_Info)
     sleep(2)
-    # lineNotify(token, sug_flight_result)
-    # sleep(2)
-    # lineNotify(token, cheapest_flight_result)
-    # sleep(2)
-    # lineNotify(token, best_flight_result)
-    # sleep(2)
-    # lineNotify(token, fast_flight_result)
-    # sleep(2)
+    lineNotify(token, sug_flight_result)
+    sleep(2)
+    lineNotify(token, cheapest_flight_result)
+    sleep(2)
+    lineNotify(token, best_flight_result)
+    sleep(2)
+    lineNotify(token, fast_flight_result)
+    sleep(2)
 
-token = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+token = "XXXXXXXXXXXXXXXXXXXXXXXXXXXX" #Fill in your Token
 main()
