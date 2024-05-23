@@ -9,33 +9,45 @@ arrive_city = "KIX" #目的地
 depart_time = "2024-07-01" #去程時間 XXXX(西元年)/XX(月)/XX(日)
 arrive_time = "2024-07-04" #返程時間 XXXX(西元年)/XX(月)/XX(日)  若為單程則此欄為""
 cabinclass = "" #艙等 經濟艙:""/特選經濟艙:"premium"/商務艙:"business"/頭等艙:"first"
-#====================================#
+directflight = False #是否僅限直飛航班 若是->True  若否->False
+#===============旅客數量===============#
 numOfAdult = 1 #成人數量
-numOfStudent = 1 #18歲以上學生數量
+numOfStudent = 0 #18歲以上學生數量
 numOfTeenager = 0 #青少年(12-17歲)數量
-numOfChild = 1 #兒童(2-11)數量
+numOfChild = 0 #兒童(2-11)數量
 numOfBaby1S = 0 #2歲以下佔坐兒童數量
 numOfBaby1L = 0 #2歲以下不佔坐兒童數量
-#====================================#
-adult = str(numOfAdult) + "adults" #成人數量 格式:人數填入numOfAdult  若無則此欄為""
-student = str(numOfStudent) + "students" #18歲以上學生數量  格式:人數填入numOfStudent  若無則此欄為""
-children = "children" + "-17"*numOfTeenager + "-11"*numOfChild + "-1S"*numOfBaby1S + "-1L"*numOfBaby1L#18歲以下數量 格式:青少年(12-17):-17 / 兒童(2-11):-11 / 2歲以下佔坐兒童:-1S / 2歲以下不佔坐兒童:-1L / 若無則此欄為""
-#範例:兩位青少年、1位兒童、2位2歲以下佔坐兒童、1位2歲以下不佔坐兒童 ==> -17-17-11-1S-1S-1L
-directflight = "?fs=fdDir=true;stops=~0" #是否僅限直飛航班 若是:"fs=fdDir=true;stops=~0" / 或否則此欄為""
-
-if cabinclass=="premium":
+#=====================================#
+if numOfAdult == 0:
+    adult = ""
+else:
+    adult = str(numOfAdult) + "adults"
+if numOfStudent == 0:
+    student = ""
+else:
+    student = str(numOfStudent) + "students"
+if numOfTeenager > 0 or numOfChild > 0 or numOfBaby1S >0 or numOfBaby1L > 0:
+    children = "children" + "-17"*numOfTeenager + "-11"*numOfChild + "-1S"*numOfBaby1S + "-1L"*numOfBaby1L
+else:
+    children = ""
+#=====================================#
+if cabinclass == "premium":
     classtype = "特選經濟艙"
-elif cabinclass=="business":
+elif cabinclass == "business":
     classtype = "商務艙"
-elif cabinclass=="first":
+elif cabinclass == "first":
     classtype = "頭等艙"
-else :
+else:
     classtype = "經濟艙"
-
+#=====================================#
+if directflight == True:
+    fdDir = "?fs=fdDir=true;stops=~0"
+else:
+    fdDir = ""
+#=====================================#
 search_Info = f'''目前查詢條件\n出發地:{depart_city}\n目的地:{arrive_city}\n出發日期:{depart_time}\n抵達日期:{arrive_time}
 艙等:{classtype}\n旅客人數\n成人:{str(numOfAdult)}人\n學生:{str(numOfStudent)}人\n青少年:{str(numOfTeenager)}人\n兒童:{str(numOfChild)}人
-2歲以下佔坐嬰兒:{str(numOfBaby1S)}人\n2歲以下不佔坐嬰兒:{str(numOfBaby1L)}人\n
-'''
+2歲以下佔坐嬰兒:{str(numOfBaby1S)}人\n2歲以下不佔坐嬰兒:{str(numOfBaby1L)}人'''
 
 #若人數設定中students非0，則會多顯示需驗證學生身分內容，XPATH需重新定位
 if numOfStudent >= 1:
@@ -50,7 +62,7 @@ else:
     flightInfo_XPATH = '//*[@id="listWrapper"]/div/div[2]/div/div[2]/div[2]/div/div'
 
 #URL Setting
-url = f"https://www.tw.kayak.com/flights/{depart_city}-{arrive_city}/{depart_time}/{arrive_time}/{cabinclass}/{adult}/{student}/{children}{directflight}"
+url = f"https://www.tw.kayak.com/flights/{depart_city}-{arrive_city}/{depart_time}/{arrive_time}/{cabinclass}/{adult}/{student}/{children}{fdDir}"
 url_Price = url + "&sort=price_a"
 url_Best = url + "&sort=bestflight_a"
 url_Duration = url + "&sort=duration_a"
