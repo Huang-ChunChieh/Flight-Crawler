@@ -41,7 +41,7 @@ else:
     classtype = "經濟艙"
 #=====================================#
 if directflight == True:
-    fdDir = "?fs=fdDir=true;stops=~0"
+    fdDir = "fs=fdDir=true;stops=~0"
 else:
     fdDir = ""
 #=====================================#
@@ -62,7 +62,7 @@ else:
     flightInfo_XPATH = '//*[@id="listWrapper"]/div/div[2]/div/div[2]/div[2]/div/div'
 
 #URL Setting
-url = f"https://www.tw.kayak.com/flights/{depart_city}-{arrive_city}/{depart_time}/{arrive_time}/{cabinclass}/{adult}/{student}/{children}{fdDir}"
+url = f"https://www.tw.kayak.com/flights/{depart_city}-{arrive_city}/{depart_time}/{arrive_time}/{cabinclass}/{adult}/{student}/{children}?{fdDir}"
 url_Price = url + "&sort=price_a"
 url_Best = url + "&sort=bestflight_a"
 url_Duration = url + "&sort=duration_a"
@@ -128,7 +128,7 @@ def lineNotify(token, msg):
 
 def main():
     reco_Flight_Result = get_Reco_Flight()
-    cheapest_Flight_Result = get_Cheapest_Flight
+    cheapest_Flight_Result = get_Cheapest_Flight()
     best_Flight_Result = get_Best_Flight()
     fast_Flight_Result = get_Fast_Flight()
     lineNotify(token, search_Info) #Send current setting Info
