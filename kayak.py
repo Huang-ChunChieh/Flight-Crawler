@@ -1,7 +1,6 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
-from fake_useragent import UserAgent
 from time import sleep
 from bs4 import BeautifulSoup
 import requests
@@ -29,12 +28,6 @@ else:
     fastFlightSummary_XPATH = '//*[@id="listWrapper"]/div/div[1]/div[3]'
     flightInfo_XPATH = '//*[@id="listWrapper"]/div/div[2]/div/div[2]/div[2]/div/div'
 
-
-#ua = UserAgent()
-#user_agent = ua.random
-#chrome_options = Options()
-#chrome_options.add_argument(f"--user-agent={user_agent}")
-#browser = webdriver.Chrome(options=chrome_options)
 browser = webdriver.Chrome()
 url = f"https://www.tw.kayak.com/flights/{depart_city}-{arrive_city}/{depart_time}/{arrive_time}/{cabinclass}/{adult}/{student}/{children}{directflight}"
 browser.get(url)
@@ -112,5 +105,5 @@ def main():
     url_message = "更多詳細資訊歡迎點擊下方連結\n" + url
     lineNotify(token, url_message)
 
-token = "qUKsqoMm8DAY9SpmHqxAidGaBlBCHzjLsiYkZ8dg75I"
+token = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
 main()
