@@ -13,7 +13,7 @@ A simple Line Bot for querying airlines.
  </p>
 
  <p align="center">
-	<img src="https://github.com/Huang-ChunChieh/Flight-Crawler/blob/main/linebot.gif" width="550" alt="screenshot">
+	<img src="https://github.com/kuanhaolin/Flight-Crawler/blob/main/linebot.gif" width="550" alt="screenshot">
 </p>
 
 ## Line Bot
