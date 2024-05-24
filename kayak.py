@@ -142,5 +142,5 @@ def main():
     lineNotify(token, fast_Flight_Result) #Send Fast Flight Info
     sleep(2)
 
-token = "XXXXXXXXXXXXXXXXXXXXXXXXXXXX" #Fill in your Token
+token = "XXX" #Fill in your Token
 main()
