@@ -29,7 +29,7 @@ A simple LineNotify & LineBot for querying airlines.
 	<img src="https://github.com/kuanhaolin/Flight-Crawler/blob/main/linebot.gif" width="200" alt="screenshot">
 </p>
 
-- Register [LINE Developer](/https://developers.line.biz/zh-hant/)
+- Register [LINE Developer](https://developers.line.biz/zh-hant/)
 - Create Provider
 - Create Channel
 - Generate Access Token & Channel Secret for program
