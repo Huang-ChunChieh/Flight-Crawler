@@ -1,22 +1,34 @@
-<h3 align="center">
+<h1 align="center">
     Flight-Crawler
-</h3>
+</h1>
 
 <p align="center">
-A simple Line Bot for querying airlines.
+A simple LineNotify & LineBot for querying airlines.
 </p>
 
 <p align="center">
+    <a href="#line-Notify">Line Notify</a>
+    ·
     <a href="#line-bot">Line Bot</a>
     ·
     <a href="ngrok">Ngrok</a>
 </p>
 
+## Line Notify
+<p align="center">
+	<img src="https://github.com/Huang-ChunChieh/Flight-Crawler/blob/main/linenotify.gif" width="200" alt="screenshot">
+</p>
+
+- Register [LINE Notify](https://notify-bot.line.me/)
+- Generate Token & Fill in the token in `linenotify_aiirline.py`
+- Setting file(depart_city/arrive_city/depart_time...)
+- Run file and get flight!
+
+## Line Bot
 <p align="center">
 	<img src="https://github.com/kuanhaolin/Flight-Crawler/blob/main/linebot.gif" width="200" alt="screenshot">
 </p>
 
-## Line Bot
 - Register [LINE Developer](/https://developers.line.biz/zh-hant/)
 - Create Provider
 - Create Channel
