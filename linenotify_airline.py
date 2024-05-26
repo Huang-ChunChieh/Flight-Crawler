@@ -4,6 +4,7 @@ from selenium.webdriver.chrome.options import Options
 from time import sleep
 import requests
 
+token = "XXX" #Fill in your Token
 depart_city = "TPE" #出發地
 arrive_city = "KIX" #目的地
 depart_time = "2024-07-01" #去程時間 XXXX(西元年)/XX(月)/XX(日)
@@ -198,5 +199,4 @@ def main():
     lineNotify(token, fast_Flight_Result) #Send Fast Flight Info
     sleep(2)
 
-token = "s58AuOhjesLlH9Cs25Ldd2BjqPoRO3k12d3GZLm1c1v" #Fill in your Token
 main()
