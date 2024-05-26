@@ -47,7 +47,7 @@ else:
     fdDir = ""
     directFlight = "否"
 #=====================================#
-search_Info = f'''目前查詢條件\n出發地:{depart_city}\n目的地:{arrive_city}\n出發日期:{depart_time}\n抵達日期:{arrive_time}
+search_Info = f'''\n目前查詢條件\n出發地:{depart_city}\n目的地:{arrive_city}\n出發日期:{depart_time}\n抵達日期:{arrive_time}
 艙等:{classtype}\n僅限直飛航班:{directFlight}\n旅客人數\n成人:{str(numOfAdult)}人\n學生:{str(numOfStudent)}人\n青少年:{str(numOfTeenager)}人\n兒童:{str(numOfChild)}人
 2歲以下佔坐嬰兒:{str(numOfBaby1S)}人\n2歲以下不佔坐嬰兒:{str(numOfBaby1L)}人'''
 #=====================================#
@@ -168,7 +168,7 @@ def get_Fast_Flight():
     # result_Fast = browser.find_elements(By.XPATH,flightInfo_XPATH) #get fast flight info
     # for k in result_Fast:
     #     print(k.text)
-    fast_Result_Message = "最快航班資訊\n====================\n" + get_Flight_Result() + "詳細資訊請點擊下方連結\n" + url_Duration
+    fast_Result_Message = "\n最快航班資訊\n====================\n" + get_Flight_Result() + "詳細資訊請點擊下方連結\n" + url_Duration
     return fast_Result_Message
 
 #LineNotify
@@ -198,5 +198,5 @@ def main():
     lineNotify(token, fast_Flight_Result) #Send Fast Flight Info
     sleep(2)
 
-token = "XXX" #Fill in your Token
+token = "s58AuOhjesLlH9Cs25Ldd2BjqPoRO3k12d3GZLm1c1v" #Fill in your Token
 main()
