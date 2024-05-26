@@ -48,18 +48,61 @@ else:
 search_Info = f'''目前查詢條件\n出發地:{depart_city}\n目的地:{arrive_city}\n出發日期:{depart_time}\n抵達日期:{arrive_time}
 艙等:{classtype}\n旅客人數\n成人:{str(numOfAdult)}人\n學生:{str(numOfStudent)}人\n青少年:{str(numOfTeenager)}人\n兒童:{str(numOfChild)}人
 2歲以下佔坐嬰兒:{str(numOfBaby1S)}人\n2歲以下不佔坐嬰兒:{str(numOfBaby1L)}人'''
-
+#=====================================#
+GoTripDepartTimeXPATH = '//*[@id="listWrapper"]/div/div[2]/div/div[2]/div[2]/div/div/div[1]/div[2]/div/ol/li[1]/div/div/div[3]/div[1]/span[1]'
+GoTripArriveTimeXPATH = '//*[@id="listWrapper"]/div/div[2]/div/div[2]/div[2]/div/div/div[1]/div[2]/div/ol/li[1]/div/div/div[3]/div[1]/span[3]'
+GoTripDepartAirportXPATH = '//*[@id="listWrapper"]/div/div[2]/div/div[2]/div[2]/div/div/div[1]/div[2]/div/ol/li[1]/div/div/div[3]/div[2]/div/div[1]'
+GoTripArriveAirportXPATH = '//*[@id="listWrapper"]/div/div[2]/div/div[2]/div[2]/div/div/div[1]/div[2]/div/ol/li[1]/div/div/div[3]/div[2]/div/div[2]'
+GoTripDirectFlightOrNotXPATH = '//*[@id="listWrapper"]/div/div[2]/div/div[2]/div[2]/div/div/div[1]/div[2]/div/ol/li[1]/div/div/div[4]/div[1]/span'
+GoTripTotalTimeXPATH = '//*[@id="listWrapper"]/div/div[2]/div/div[2]/div[2]/div/div/div[1]/div[2]/div/ol/li[1]/div/div/div[5]/div[1]'
+BackTripDepartTimeXPATH = '//*[@id="listWrapper"]/div/div[2]/div/div[2]/div[2]/div/div/div[1]/div[2]/div/ol/li[2]/div/div/div[3]/div[1]/span[1]'
+BackTripArriveTimeXPATH = '//*[@id="listWrapper"]/div/div[2]/div/div[2]/div[2]/div/div/div[1]/div[2]/div/ol/li[2]/div/div/div[3]/div[1]/span[3]'
+BackTripDepartAirportXPATH = '//*[@id="listWrapper"]/div/div[2]/div/div[2]/div[2]/div/div/div[1]/div[2]/div/ol/li[2]/div/div/div[3]/div[2]/div/div[1]'
+BackTripArriveAirportXPATH = '//*[@id="listWrapper"]/div/div[2]/div/div[2]/div[2]/div/div/div[1]/div[2]/div/ol/li[2]/div/div/div[3]/div[2]/div/div[2]'
+BackTripDirectFlightOrNotXPATH = '//*[@id="listWrapper"]/div/div[2]/div/div[2]/div[2]/div/div/div[1]/div[2]/div/ol/li[2]/div/div/div[4]/div[1]/span'
+BackTripTotalTimeXPATH = '//*[@id="listWrapper"]/div/div[2]/div/div[2]/div[2]/div/div/div[1]/div[2]/div/ol/li[2]/div/div/div[5]/div[1]'
+AirlineNameXPATH = '//*[@id="listWrapper"]/div/div[2]/div/div[2]/div[2]/div/div/div[1]/div[3]/div/div/div[1]'
+TotalPricePerPersonXPATH = '//*[@id="listWrapper"]/div/div[2]/div/div[2]/div[2]/div/div/div[2]/div/div[2]/div/div[1]/div[1]/a/div/div/div[1]/div[1]'
+#=====================================#
 #若人數設定中students非0，則會多顯示需驗證學生身分內容，XPATH需重新定位
 if numOfStudent >= 1:
     cheapestFlightSummary_XPATH = '//*[@id="listWrapper"]/div/div[2]/div[1]'
     bestFlightSummary_XPATH = '//*[@id="listWrapper"]/div/div[2]/div[2]'
     fastFlightSummary_XPATH = '//*[@id="listWrapper"]/div/div[2]/div[3]'
     flightInfo_XPATH = '//*[@id="listWrapper"]/div/div[3]/div/div[2]/div[2]/div/div'
+    GoTripDepartTimeXPATH = '//*[@id="listWrapper"]/div/div[3]/div/div[2]/div[2]/div/div/div[1]/div[2]/div/ol/li[1]/div/div/div[3]/div[1]/span[1]'
+    GoTripArriveTimeXPATH = '//*[@id="listWrapper"]/div/div[3]/div/div[2]/div[2]/div/div/div[1]/div[2]/div/ol/li[1]/div/div/div[3]/div[1]/span[3]'
+    GoTripDepartAirportXPATH = '//*[@id="listWrapper"]/div/div[3]/div/div[2]/div[2]/div/div/div[1]/div[2]/div/ol/li[1]/div/div/div[3]/div[2]/div/div[1]'
+    GoTripArriveAirportXPATH = '//*[@id="listWrapper"]/div/div[3]/div/div[2]/div[2]/div/div/div[1]/div[2]/div/ol/li[1]/div/div/div[3]/div[2]/div/div[2]'
+    GoTripDirectFlightOrNotXPATH = '//*[@id="listWrapper"]/div/div[3]/div/div[2]/div[2]/div/div/div[1]/div[2]/div/ol/li[1]/div/div/div[4]/div[1]/span'
+    GoTripTotalTimeXPATH = '//*[@id="listWrapper"]/div/div[3]/div/div[2]/div[2]/div/div/div[1]/div[2]/div/ol/li[1]/div/div/div[5]/div[1]'
+    BackTripDepartTimeXPATH = '//*[@id="listWrapper"]/div/div[3]/div/div[2]/div[2]/div/div/div[1]/div[2]/div/ol/li[2]/div/div/div[3]/div[1]/span[1]'
+    BackTripArriveTimeXPATH = '//*[@id="listWrapper"]/div/div[3]/div/div[2]/div[2]/div/div/div[1]/div[2]/div/ol/li[2]/div/div/div[3]/div[1]/span[3]'
+    BackTripDepartAirportXPATH = '//*[@id="listWrapper"]/div/div[3]/div/div[2]/div[2]/div/div/div[1]/div[2]/div/ol/li[2]/div/div/div[3]/div[2]/div/div[1]'
+    BackTripArriveAirportXPATH = '//*[@id="listWrapper"]/div/div[3]/div/div[2]/div[2]/div/div/div[1]/div[2]/div/ol/li[2]/div/div/div[3]/div[2]/div/div[2]'
+    BackTripDirectFlightOrNotXPATH = '//*[@id="listWrapper"]/div/div[3]/div/div[2]/div[2]/div/div/div[1]/div[2]/div/ol/li[2]/div/div/div[4]/div[1]/span'
+    BackTripTotalTimeXPATH = '//*[@id="listWrapper"]/div/div[3]/div/div[2]/div[2]/div/div/div[1]/div[2]/div/ol/li[2]/div/div/div[5]/div[1]'
+    AirlineNameXPATH = '//*[@id="listWrapper"]/div/div[3]/div/div[2]/div[2]/div/div/div[1]/div[3]/div/div/div[1]'
+    TotalPricePerPersonXPATH = '//*[@id="listWrapper"]/div/div[3]/div/div[2]/div[2]/div/div/div[2]/div/div[2]/div/div[1]/div[1]/a/div/div/div[1]/div[1]'
 else:
     cheapestFlightSummary_XPATH = '//*[@id="listWrapper"]/div/div[1]/div[1]'
     bestFlightSummary_XPATH = '//*[@id="listWrapper"]/div/div[1]/div[2]'
     fastFlightSummary_XPATH = '//*[@id="listWrapper"]/div/div[1]/div[3]'
     flightInfo_XPATH = '//*[@id="listWrapper"]/div/div[2]/div/div[2]/div[2]/div/div'
+    GoTripDepartTimeXPATH = '//*[@id="listWrapper"]/div/div[2]/div/div[2]/div[2]/div/div/div[1]/div[2]/div/ol/li[1]/div/div/div[3]/div[1]/span[1]'
+    GoTripArriveTimeXPATH = '//*[@id="listWrapper"]/div/div[2]/div/div[2]/div[2]/div/div/div[1]/div[2]/div/ol/li[1]/div/div/div[3]/div[1]/span[3]'
+    GoTripDepartAirportXPATH = '//*[@id="listWrapper"]/div/div[2]/div/div[2]/div[2]/div/div/div[1]/div[2]/div/ol/li[1]/div/div/div[3]/div[2]/div/div[1]'
+    GoTripArriveAirportXPATH = '//*[@id="listWrapper"]/div/div[2]/div/div[2]/div[2]/div/div/div[1]/div[2]/div/ol/li[1]/div/div/div[3]/div[2]/div/div[2]'
+    GoTripDirectFlightOrNotXPATH = '//*[@id="listWrapper"]/div/div[2]/div/div[2]/div[2]/div/div/div[1]/div[2]/div/ol/li[1]/div/div/div[4]/div[1]/span'
+    GoTripTotalTimeXPATH = '//*[@id="listWrapper"]/div/div[2]/div/div[2]/div[2]/div/div/div[1]/div[2]/div/ol/li[1]/div/div/div[5]/div[1]'
+    BackTripDepartTimeXPATH = '//*[@id="listWrapper"]/div/div[2]/div/div[2]/div[2]/div/div/div[1]/div[2]/div/ol/li[2]/div/div/div[3]/div[1]/span[1]'
+    BackTripArriveTimeXPATH = '//*[@id="listWrapper"]/div/div[2]/div/div[2]/div[2]/div/div/div[1]/div[2]/div/ol/li[2]/div/div/div[3]/div[1]/span[3]'
+    BackTripDepartAirportXPATH = '//*[@id="listWrapper"]/div/div[2]/div/div[2]/div[2]/div/div/div[1]/div[2]/div/ol/li[2]/div/div/div[3]/div[2]/div/div[1]'
+    BackTripArriveAirportXPATH = '//*[@id="listWrapper"]/div/div[2]/div/div[2]/div[2]/div/div/div[1]/div[2]/div/ol/li[2]/div/div/div[3]/div[2]/div/div[2]'
+    BackTripDirectFlightOrNotXPATH = '//*[@id="listWrapper"]/div/div[2]/div/div[2]/div[2]/div/div/div[1]/div[2]/div/ol/li[2]/div/div/div[4]/div[1]/span'
+    BackTripTotalTimeXPATH = '//*[@id="listWrapper"]/div/div[2]/div/div[2]/div[2]/div/div/div[1]/div[2]/div/ol/li[2]/div/div/div[5]/div[1]'
+    AirlineNameXPATH = '//*[@id="listWrapper"]/div/div[2]/div/div[2]/div[2]/div/div/div[1]/div[3]/div/div/div[1]'
+    TotalPricePerPersonXPATH = '//*[@id="listWrapper"]/div/div[2]/div/div[2]/div[2]/div/div/div[2]/div/div[2]/div/div[1]/div[1]/a/div/div/div[1]/div[1]'
 
 #URL Setting
 url = f"https://www.tw.kayak.com/flights/{depart_city}-{arrive_city}/{depart_time}/{arrive_time}/{cabinclass}/{adult}/{student}/{children}?{fdDir}"
@@ -70,6 +113,31 @@ browser = webdriver.Chrome()
 browser.get(url)
 sleep(10)
 
+def get_Flight_Result():
+    info_GoTripDepartTime = browser.find_element(By.XPATH,GoTripDepartTimeXPATH).text
+    info_GoTripArriveTime = browser.find_element(By.XPATH,GoTripArriveTimeXPATH).text
+    info_GoTripDepartAirport = browser.find_element(By.XPATH,GoTripDepartAirportXPATH).text
+    info_GoTripArriveAirport = browser.find_element(By.XPATH,GoTripArriveAirportXPATH).text
+    info_GoTripDirectFlightOrNot = browser.find_element(By.XPATH,GoTripDirectFlightOrNotXPATH).text
+    info_GoTripTotalTime = browser.find_element(By.XPATH,GoTripTotalTimeXPATH).text
+    info_BackTripDepartTime = browser.find_element(By.XPATH,BackTripDepartTimeXPATH).text
+    info_BackTripArriveTime = browser.find_element(By.XPATH,BackTripArriveTimeXPATH).text
+    info_BackTripDepartAirport = browser.find_element(By.XPATH,BackTripDepartAirportXPATH).text
+    info_BackTripArriveAirport = browser.find_element(By.XPATH,BackTripArriveAirportXPATH).text
+    info_BackTripDirectFlightOrNot = browser.find_element(By.XPATH,BackTripDirectFlightOrNotXPATH).text
+    info_BackTripTotalTime = browser.find_element(By.XPATH,BackTripTotalTimeXPATH).text
+    info_AirlineName = browser.find_element(By.XPATH,AirlineNameXPATH).text
+    info_TotalPricePerPerson = browser.find_element(By.XPATH,TotalPricePerPersonXPATH).text
+    if numOfStudent >= 1:
+        info_StudentOrNot = "**查詢條件中包含學生，需要驗證以獲取學生票價**\n"
+    else:
+        info_StudentOrNot = ""
+    flightResult = f'''{info_StudentOrNot}去程\n時間:{info_GoTripDepartTime}-{info_GoTripArriveTime}\n出發機場:{info_GoTripDepartAirport}\n目的地機場:{info_GoTripArriveAirport}\n直飛航班or轉機:{info_GoTripDirectFlightOrNot}\n總飛行時間:{info_GoTripTotalTime}
+====================\n返程\n時間:{info_BackTripDepartTime}-{info_BackTripArriveTime}\n出發機場:{info_BackTripDepartAirport}\n目的地機場:{info_BackTripArriveAirport}\n直飛航班or轉機:{info_BackTripDirectFlightOrNot}\n總飛行時間:{info_BackTripTotalTime}
+====================\n航空公司:{info_AirlineName}\n價格:{info_TotalPricePerPerson}/人'''
+    print(flightResult)
+    return flightResult
+get_Flight_Result()
 def get_Reco_Flight(): #獲取最便宜/超值/最快三項簡易資訊
     print("推薦航班資訊")
     print("==========================")
@@ -85,10 +153,10 @@ def get_Cheapest_Flight():
     cheapest_Result_Summary = browser.find_element(By.XPATH,cheapestFlightSummary_XPATH) #cheapest_result_box_summary
     cheapest_Result_Summary.click() #click cheapest_result_box
     sleep(3)
-    result_Cheapest = browser.find_elements(By.XPATH,flightInfo_XPATH) #get cheapest flight info
-    for j in result_Cheapest:
-        print(j.text)
-    cheapest_Result_Message = "最優惠航班資訊\n==== ==== ====\n" + j.text + "詳細資訊請點擊下方連結\n" + url_Price
+    #result_Cheapest = browser.find_elements(By.XPATH,flightInfo_XPATH) #get cheapest flight info
+    #for j in result_Cheapest:
+    #    print(j.text)
+    cheapest_Result_Message = "最優惠航班資訊\n==== ==== ====\n" + get_Flight_Result() + "詳細資訊請點擊下方連結\n" + url_Price
     return cheapest_Result_Message
 
 def get_Best_Flight():
@@ -127,20 +195,20 @@ def lineNotify(token, msg):
     return r.status_code #return 200->success
 
 def main():
-    reco_Flight_Result = get_Reco_Flight()
+    #reco_Flight_Result = get_Reco_Flight()
     cheapest_Flight_Result = get_Cheapest_Flight()
-    best_Flight_Result = get_Best_Flight()
-    fast_Flight_Result = get_Fast_Flight()
-    lineNotify(token, search_Info) #Send current setting Info
-    sleep(2)
-    lineNotify(token, reco_Flight_Result) #Send Recommendation Info  #TODO 是否保留?
-    sleep(2)
+    #best_Flight_Result = get_Best_Flight()
+    #fast_Flight_Result = get_Fast_Flight()
+    #lineNotify(token, search_Info) #Send current setting Info
+    #sleep(2)
+    #lineNotify(token, reco_Flight_Result) #Send Recommendation Info  #TODO 是否保留?
+    #sleep(2)
     lineNotify(token, cheapest_Flight_Result) #Send Cheapest Flight Info
-    sleep(2)
-    lineNotify(token, best_Flight_Result) #Send Best Flight Info
-    sleep(2)
-    lineNotify(token, fast_Flight_Result) #Send Fast Flight Info
-    sleep(2)
+    #sleep(2)
+    #lineNotify(token, best_Flight_Result) #Send Best Flight Info
+    #sleep(2)
+    #lineNotify(token, fast_Flight_Result) #Send Fast Flight Info
+    #sleep(2)
 
 token = "XXX" #Fill in your Token
 main()
