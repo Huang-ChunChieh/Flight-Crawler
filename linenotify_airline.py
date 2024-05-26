@@ -4,6 +4,7 @@ from selenium.webdriver.chrome.options import Options
 from time import sleep
 import requests
 
+#========Info should be setting========#
 token = "XXX" #Fill in your Token
 depart_city = "TPE" #出發地
 arrive_city = "KIX" #目的地
@@ -11,14 +12,14 @@ depart_time = "2024-07-01" #去程時間 XXXX(西元年)/XX(月)/XX(日)
 arrive_time = "2024-07-04" #返程時間 XXXX(西元年)/XX(月)/XX(日)  若為單程則此欄為""
 cabinclass = "" #艙等 經濟艙:""/特選經濟艙:"premium"/商務艙:"business"/頭等艙:"first"
 directflight = True #是否僅限直飛航班 若是->True  若否->False
-#===============旅客數量===============#
+#=========Numbers of Travelers=========#
 numOfAdult = 1 #成人數量
 numOfStudent = 0 #18歲以上學生數量
 numOfTeenager = 0 #青少年(12-17歲)數量
 numOfChild = 0 #兒童(2-11)數量
 numOfBaby1S = 0 #2歲以下佔坐兒童數量
 numOfBaby1L = 0 #2歲以下不佔坐兒童數量
-#=====================================#
+#==========================================================================#
 if numOfAdult == 0:
     adult = ""
 else:
@@ -31,7 +32,7 @@ if numOfTeenager > 0 or numOfChild > 0 or numOfBaby1S >0 or numOfBaby1L > 0:
     children = "children" + "-17"*numOfTeenager + "-11"*numOfChild + "-1S"*numOfBaby1S + "-1L"*numOfBaby1L
 else:
     children = ""
-#=====================================#
+#==========================================================================#
 if cabinclass == "premium":
     classtype = "特選經濟艙"
 elif cabinclass == "business":
@@ -40,18 +41,18 @@ elif cabinclass == "first":
     classtype = "頭等艙"
 else:
     classtype = "經濟艙"
-#=====================================#
+#==========================================================================#
 if directflight == True:
     fdDir = "fs=fdDir=true;stops=~0"
     directFlight = "是"
 else:
     fdDir = ""
     directFlight = "否"
-#=====================================#
+#==========================================================================#
 search_Info = f'''\n目前查詢條件\n出發地:{depart_city}\n目的地:{arrive_city}\n出發日期:{depart_time}\n抵達日期:{arrive_time}
 艙等:{classtype}\n僅限直飛航班:{directFlight}\n旅客人數\n成人:{str(numOfAdult)}人\n學生:{str(numOfStudent)}人\n青少年:{str(numOfTeenager)}人\n兒童:{str(numOfChild)}人
 2歲以下佔坐嬰兒:{str(numOfBaby1S)}人\n2歲以下不佔坐嬰兒:{str(numOfBaby1L)}人'''
-#=====================================#
+#==========================================================================#
 
 #若人數設定中students非0，則會多顯示需驗證學生身分內容，XPATH需重新定位
 if numOfStudent >= 1:
