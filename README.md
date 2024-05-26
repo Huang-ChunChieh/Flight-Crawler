@@ -21,7 +21,7 @@ A simple LineNotify & LineBot for querying airlines.
 * Register & Login [LINE Notify](https://notify-bot.line.me/)
 * Generate Token & Fill in the token in `linenotify_airline.py`
 * Setting file(depart_city/arrive_city/depart_time...)
-* Run file and get flight!
+* Run `linenotify_airline.py` and get flight info!
 
 
 # LineBot Setting 
@@ -58,3 +58,6 @@ A simple LineNotify & LineBot for querying airlines.
   - Click Channel U create --> Messaging API settings --> Webhook settings
   - Fill in **Public URL**
   - Enabled **Use webhook**
+
+## After Complete [Line Developer](#line-developer) & [Ngrok](#ngrok)
+* Run `linebot_airline.py` and Chat with linebot to get flight info!
