@@ -13,7 +13,7 @@ A simple LineNotify & LineBot for querying airlines.
     <a href="#ngrok">Ngrok</a>
 </p>
 
-## Line Notify
+# Line Notify Setting
 <p align="center">
 	<img src="https://github.com/Huang-ChunChieh/Flight-Crawler/blob/main/linenotify.gif" width="200" alt="screenshot">
 </p>
