@@ -57,17 +57,17 @@ def flight_Result(msg):
     depart_city = msg[1] #出發地
     arrive_city = msg[2] #目的地
     depart_time = msg[3] #去程時間 XXXX(西元年)/XX(月)/XX(日)
-    arrive_time = "" #返程時間 XXXX(西元年)/XX(月)/XX(日)  若為單程則此欄為""
-    cabinclass = "" #艙等 經濟艙:""/特選經濟艙:"premium"/商務艙:"business"/頭等艙:"first"
-    directflight = False #是否僅限直飛航班 若是->True  若否->False
-    #===============旅客數量===============#
-    numOfAdult = 1 #成人數量
-    numOfStudent = 0 #18歲以上學生數量
-    numOfTeenager = 0 #青少年(12-17歲)數量
-    numOfChild = 0 #兒童(2-11)數量
-    numOfBaby1S = 0 #2歲以下佔坐兒童數量
-    numOfBaby1L = 0 #2歲以下不佔坐兒童數量
-    #=====================================#
+    arrive_time = msg[4] #返程時間 XXXX(西元年)/XX(月)/XX(日)  若為單程則此欄為""
+    cabinclass = msg[5] #艙等 經濟艙:""/特選經濟艙:"premium"/商務艙:"business"/頭等艙:"first"
+    directflight = msg[6] #是否僅限直飛航班 若是->True  若否->False
+    #=========Numbers of Travelers=========#
+    numOfAdult = msg[7] #成人數量
+    numOfStudent = msg[8] #18歲以上學生數量
+    numOfTeenager = msg[9] #青少年(12-17歲)數量
+    numOfChild = msg[10] #兒童(2-11)數量
+    numOfBaby1S = msg[11] #2歲以下佔坐兒童數量
+    numOfBaby1L = msg[12] #2歲以下不佔坐兒童數量
+    #==========================================================================#
     if numOfAdult == 0:
         adult = ""
     else:
@@ -104,7 +104,7 @@ def flight_Result(msg):
         cheapestFlightSummary_XPATH = '//*[@id="listWrapper"]/div/div[2]/div[1]'
         bestFlightSummary_XPATH = '//*[@id="listWrapper"]/div/div[2]/div[2]'
         fastFlightSummary_XPATH = '//*[@id="listWrapper"]/div/div[2]/div[3]'
-        flightInfo_XPATH = '//*[@id="listWrapper"]/div/div[3]/div/div[2]/div[2]/div/div'
+        #flightInfo_XPATH = '//*[@id="listWrapper"]/div/div[3]/div/div[2]/div[2]/div/div'
         GoTripDepartTimeXPATH = '//*[@id="listWrapper"]/div/div[3]/div/div[2]/div[2]/div/div/div[1]/div[2]/div/ol/li[1]/div/div/div[3]/div[1]/span[1]'
         GoTripArriveTimeXPATH = '//*[@id="listWrapper"]/div/div[3]/div/div[2]/div[2]/div/div/div[1]/div[2]/div/ol/li[1]/div/div/div[3]/div[1]/span[3]'
         GoTripDepartAirportXPATH = '//*[@id="listWrapper"]/div/div[3]/div/div[2]/div[2]/div/div/div[1]/div[2]/div/ol/li[1]/div/div/div[3]/div[2]/div/div[1]'
@@ -123,7 +123,7 @@ def flight_Result(msg):
         cheapestFlightSummary_XPATH = '//*[@id="listWrapper"]/div/div[1]/div[1]'
         bestFlightSummary_XPATH = '//*[@id="listWrapper"]/div/div[1]/div[2]'
         fastFlightSummary_XPATH = '//*[@id="listWrapper"]/div/div[1]/div[3]'
-        flightInfo_XPATH = '//*[@id="listWrapper"]/div/div[2]/div/div[2]/div[2]/div/div'
+        #flightInfo_XPATH = '//*[@id="listWrapper"]/div/div[2]/div/div[2]/div[2]/div/div'
         GoTripDepartTimeXPATH = '//*[@id="listWrapper"]/div/div[2]/div/div[2]/div[2]/div/div/div[1]/div[2]/div/ol/li[1]/div/div/div[3]/div[1]/span[1]'
         GoTripArriveTimeXPATH = '//*[@id="listWrapper"]/div/div[2]/div/div[2]/div[2]/div/div/div[1]/div[2]/div/ol/li[1]/div/div/div[3]/div[1]/span[3]'
         GoTripDepartAirportXPATH = '//*[@id="listWrapper"]/div/div[2]/div/div[2]/div[2]/div/div/div[1]/div[2]/div/ol/li[1]/div/div/div[3]/div[2]/div/div[1]'
@@ -189,10 +189,10 @@ def flight_Result(msg):
         cheapest_Result_Summary = browser.find_element(By.XPATH,cheapestFlightSummary_XPATH) #cheapest_result_box_summary
         cheapest_Result_Summary.click() #click cheapest_result_box
         sleep(3)
-        result_Cheapest = browser.find_elements(By.XPATH,flightInfo_XPATH) #get cheapest flight info
-        for j in result_Cheapest:
-            print(j.text)
-        cheapest_Result_Message = "最優惠航班資訊\n==== ==== ====\n" + j.text + "詳細資訊請點擊下方連結\n" + url_Price
+        #result_Cheapest = browser.find_elements(By.XPATH,flightInfo_XPATH) #get cheapest flight info
+        #for j in result_Cheapest:
+        #    print(j.text)
+        cheapest_Result_Message = "\n最優惠航班資訊\n====================\n" + get_Flight_Result() + "詳細資訊請點擊下方連結\n" + url_Price
         return cheapest_Result_Message
 
     def get_Best_Flight():
@@ -201,10 +201,10 @@ def flight_Result(msg):
         best_Result_Summary = browser.find_element(By.XPATH,bestFlightSummary_XPATH) #best_result_box_summary
         best_Result_Summary.click() #click best_result_box
         sleep(3)
-        result_Best = browser.find_elements(By.XPATH,flightInfo_XPATH) #get best flight info
-        for i in result_Best:
-            print(i.text)
-        best_Result_Message = "超值航班資訊\n==== ==== ====\n" + i.text + "詳細資訊請點擊下方連結\n" + url_Best
+        # result_Best = browser.find_elements(By.XPATH,flightInfo_XPATH) #get best flight info
+        # for i in result_Best:
+        #     print(i.text)
+        best_Result_Message = "\n超值航班資訊\n====================\n" + get_Flight_Result() + "詳細資訊請點擊下方連結\n" + url_Best
         return best_Result_Message
 
     def get_Fast_Flight():
@@ -213,16 +213,16 @@ def flight_Result(msg):
         fast_Result_Summary = browser.find_element(By.XPATH,fastFlightSummary_XPATH) #fast_result_box_summary
         fast_Result_Summary.click() #click fast_result_box
         sleep(3)
-        result_Fast = browser.find_elements(By.XPATH,flightInfo_XPATH) #get fast flight info
-        for k in result_Fast:
-            print(k.text)
-        fast_Result_Message = "最快航班資訊\n==== ==== ====\n" + k.text + "詳細資訊請點擊下方連結\n" + url_Duration
+        # result_Fast = browser.find_elements(By.XPATH,flightInfo_XPATH) #get fast flight info
+        # for k in result_Fast:
+        #     print(k.text)
+        fast_Result_Message = "\n最快航班資訊\n====================\n" + get_Flight_Result() + "詳細資訊請點擊下方連結\n" + url_Duration
         return fast_Result_Message
 
     return search_Info + get_Reco_Flight() + get_Cheapest_Flight() + get_Best_Flight() + get_Fast_Flight()
 
 def help(msg):
-    return "輸入1+[區域]  顯示各地區機場\n範例: 1 東北亞\n\n輸入2+[設定格式]  顯示機票\n範例: 2 TPE KIX 2024-07-01"
+    return "輸入1+[區域]  顯示各地區機場\n範例: 1 東北亞\n\n輸入2+[設定格式]  顯示機票\n範例: 2 TPE KIX 2024-07-01 2024-07-04"
 
 outfit_suggestions = {
     '1' : region_Result,
