@@ -2,9 +2,9 @@
     Flight-Crawler
 </h1>
 
-<p align="center">
+<h3 align="center">
 A simple LineNotify & LineBot for querying airlines.
-</p>
+</h3>
 <p align="center">
     <a href="#line-notify">Line Notify</a>
     ·
