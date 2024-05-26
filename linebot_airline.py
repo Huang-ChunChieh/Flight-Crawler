@@ -49,11 +49,11 @@ def display_cities_by_region(region):
     #print(filtered_df)
     return filtered_df
 
-def region_Result(msg):
+def fun1(msg):
     region = msg[1]
     return display_cities_by_region(region)
 
-def flight_Result(msg):
+def fun2(msg):
     depart_city = msg[1] #出發地
     arrive_city = msg[2] #目的地
     depart_time = msg[3] #去程時間 XXXX(西元年)/XX(月)/XX(日)
@@ -225,8 +225,8 @@ def help(msg):
     return "輸入1+[區域]  顯示各地區機場\n範例: 1 東北亞\n\n輸入2+[設定格式]  顯示機票\n範例: 2 TPE KIX 2024-07-01"
 
 outfit_suggestions = {
-    '1' : region_Result,
-    '2' : flight_Result,
+    '1' : fun1,
+    '2' : fun2,
     'help' : help
 }
 
