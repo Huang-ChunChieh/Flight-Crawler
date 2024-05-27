@@ -3,19 +3,19 @@ from selenium.webdriver.common.by import By
 from time import sleep
 import requests
 
-#========Info should be setting========#
+#========Info Should Be Setting========#
 token = "XXX" #Fill in your Token
 depart_city = "TPE" #出發地
 arrive_city = "KIX" #目的地  若為單程則此欄為""
-depart_time = "2024-07-01" #去程時間 XXXX(西元年)-XX(月)-XX(日)
-arrive_time = "2024-07-04" #返程時間 XXXX(西元年)-XX(月)-XX(日)  若為單程則此欄為""
-cabinclass = "" #艙等  經濟艙:""  特選經濟艙:"premium"  商務艙:"business"  頭等艙:"first"
+depart_time = "2024-07-10" #去程時間 XXXX(西元年)-XX(月)-XX(日)
+arrive_time = "" #返程時間 XXXX(西元年)-XX(月)-XX(日)  若為單程則此欄為""
+cabinclass = "business" #艙等  經濟艙:""  特選經濟艙:"premium"  商務艙:"business"  頭等艙:"first"
 directflight = True #是否僅限直飛航班 若是->True  若否->False
 #Numbers of Travelers
 numOfAdult = 1 #成人數量
-numOfStudent = 0 #18歲以上學生數量
+numOfStudent = 1 #18歲以上學生數量
 numOfTeenager = 0 #青少年(12-17歲)數量
-numOfChild = 0 #兒童(2-11)數量
+numOfChild = 1 #兒童(2-11)數量
 numOfBaby1S = 0 #2歲以下佔坐兒童數量
 numOfBaby1L = 0 #2歲以下不佔坐兒童數量
 #======================================#
@@ -58,12 +58,14 @@ search_Info = f'''\n目前查詢條件\n出發地:{depart_city}\n目的地:{arri
 #======================================#
 
 # 人數設定中若Students非0，則會多顯示需驗證學生身分內容，XPATH需重新定位
-if numOfStudent >= 1:
+# 單向航程只會有一行資訊
+if numOfStudent >= 1 and arrive_time != "": # 學生!=0 雙向航程
     cheapestFlightSummary_XPATH = '//*[@id="listWrapper"]/div/div[2]/div[1]'
     bestFlightSummary_XPATH = '//*[@id="listWrapper"]/div/div[2]/div[2]'
     fastFlightSummary_XPATH = '//*[@id="listWrapper"]/div/div[2]/div[3]'
     #flightInfo_XPATH = '//*[@id="listWrapper"]/div/div[3]/div/div[2]/div[2]/div/div'
     GoTripDepartTimeXPATH = '//*[@id="listWrapper"]/div/div[3]/div/div[2]/div[2]/div/div/div[1]/div[2]/div/ol/li[1]/div/div/div[3]/div[1]/span[1]'
+                             #//*[@id="listWrapper"]/div/div[3]/div/div[2]/div[2]/div/div/div[1]/div[2]/div/ol/li/div/div/div[2]/div[1]/span[1]
     GoTripArriveTimeXPATH = '//*[@id="listWrapper"]/div/div[3]/div/div[2]/div[2]/div/div/div[1]/div[2]/div/ol/li[1]/div/div/div[3]/div[1]/span[3]'
     GoTripDepartAirportXPATH = '//*[@id="listWrapper"]/div/div[3]/div/div[2]/div[2]/div/div/div[1]/div[2]/div/ol/li[1]/div/div/div[3]/div[2]/div/div[1]'
     GoTripArriveAirportXPATH = '//*[@id="listWrapper"]/div/div[3]/div/div[2]/div[2]/div/div/div[1]/div[2]/div/ol/li[1]/div/div/div[3]/div[2]/div/div[2]'
@@ -77,7 +79,7 @@ if numOfStudent >= 1:
     BackTripTotalTimeXPATH = '//*[@id="listWrapper"]/div/div[3]/div/div[2]/div[2]/div/div/div[1]/div[2]/div/ol/li[2]/div/div/div[5]/div[1]'
     AirlineNameXPATH = '//*[@id="listWrapper"]/div/div[3]/div/div[2]/div[2]/div/div/div[1]/div[3]/div/div/div[1]'
     TotalPricePerPersonXPATH = '//*[@id="listWrapper"]/div/div[3]/div/div[2]/div[2]/div/div/div[2]/div/div[2]/div/div[1]/div[1]/a/div/div/div[1]/div[1]'
-else:
+elif numOfStudent == 0 and arrive_time != "": # 學生=0 雙向航程
     cheapestFlightSummary_XPATH = '//*[@id="listWrapper"]/div/div[1]/div[1]'
     bestFlightSummary_XPATH = '//*[@id="listWrapper"]/div/div[1]/div[2]'
     fastFlightSummary_XPATH = '//*[@id="listWrapper"]/div/div[1]/div[3]'
@@ -96,9 +98,36 @@ else:
     BackTripTotalTimeXPATH = '//*[@id="listWrapper"]/div/div[2]/div/div[2]/div[2]/div/div/div[1]/div[2]/div/ol/li[2]/div/div/div[5]/div[1]'
     AirlineNameXPATH = '//*[@id="listWrapper"]/div/div[2]/div/div[2]/div[2]/div/div/div[1]/div[3]/div/div/div[1]'
     TotalPricePerPersonXPATH = '//*[@id="listWrapper"]/div/div[2]/div/div[2]/div[2]/div/div/div[2]/div/div[2]/div/div[1]/div[1]/a/div/div/div[1]/div[1]'
+elif numOfStudent >= 1 and arrive_time == "":   # 學生!=0 單向航程
+    cheapestFlightSummary_XPATH = '//*[@id="listWrapper"]/div/div[2]/div[1]'
+    bestFlightSummary_XPATH = '//*[@id="listWrapper"]/div/div[2]/div[2]'
+    fastFlightSummary_XPATH = '//*[@id="listWrapper"]/div/div[2]/div[3]'
+    #flightInfo_XPATH = '//*[@id="listWrapper"]/div/div[3]/div/div[2]/div[2]/div/div'
+    GoTripDepartTimeXPATH = '//*[@id="listWrapper"]/div/div[3]/div/div[2]/div[2]/div/div/div[1]/div[2]/div/ol/li/div/div/div[2]/div[1]/span[1]'
+    GoTripArriveTimeXPATH = '//*[@id="listWrapper"]/div/div[3]/div/div[2]/div[2]/div/div/div[1]/div[2]/div/ol/li/div/div/div[2]/div[1]/span[3]'
+    GoTripDepartAirportXPATH = '//*[@id="listWrapper"]/div/div[3]/div/div[2]/div[2]/div/div/div[1]/div[2]/div/ol/li/div/div/div[2]/div[2]/div/div[1]'
+    GoTripArriveAirportXPATH = '//*[@id="listWrapper"]/div/div[3]/div/div[2]/div[2]/div/div/div[1]/div[2]/div/ol/li/div/div/div[2]/div[2]/div/div[2]'
+    GoTripDirectFlightOrNotXPATH = '//*[@id="listWrapper"]/div/div[3]/div/div[2]/div[2]/div/div/div[1]/div[2]/div/ol/li/div/div/div[3]/div[1]/span'
+    GoTripTotalTimeXPATH = '//*[@id="listWrapper"]/div/div[3]/div/div[2]/div[2]/div/div/div[1]/div[2]/div/ol/li/div/div/div[4]/div[1]'
+    AirlineNameXPATH = '//*[@id="listWrapper"]/div/div[3]/div/div[2]/div[2]/div/div/div[1]/div[3]/div/div/div[1]'
+    TotalPricePerPersonXPATH = '//*[@id="listWrapper"]/div/div[3]/div/div[2]/div[2]/div/div/div[2]/div/div[2]/div/div[1]/div[1]/a/div/div/div[1]/div[1]'
+else: # 學生=0 單向航程
+    cheapestFlightSummary_XPATH = '//*[@id="listWrapper"]/div/div[1]/div[1]'
+    bestFlightSummary_XPATH = '//*[@id="listWrapper"]/div/div[1]/div[2]'
+    fastFlightSummary_XPATH = '//*[@id="listWrapper"]/div/div[1]/div[3]'
+    #flightInfo_XPATH = '//*[@id="listWrapper"]/div/div[2]/div/div[2]/div[2]/div/div'
+    GoTripDepartTimeXPATH = '//*[@id="listWrapper"]/div/div[2]/div/div[2]/div[2]/div/div/div[1]/div[2]/div/ol/li/div/div/div[2]/div[1]/span[1]'
+    GoTripArriveTimeXPATH = '//*[@id="listWrapper"]/div/div[2]/div/div[2]/div[2]/div/div/div[1]/div[2]/div/ol/li/div/div/div[2]/div[1]/span[3]'
+    GoTripDepartAirportXPATH = '//*[@id="listWrapper"]/div/div[2]/div/div[2]/div[2]/div/div/div[1]/div[2]/div/ol/li/div/div/div[2]/div[2]/div/div[1]'
+    GoTripArriveAirportXPATH = '//*[@id="listWrapper"]/div/div[2]/div/div[2]/div[2]/div/div/div[1]/div[2]/div/ol/li/div/div/div[2]/div[2]/div/div[2]'
+    GoTripDirectFlightOrNotXPATH = '//*[@id="listWrapper"]/div/div[2]/div/div[2]/div[2]/div/div/div[1]/div[2]/div/ol/li/div/div/div[3]/div[1]/span'
+    GoTripTotalTimeXPATH = '//*[@id="listWrapper"]/div/div[2]/div/div[2]/div[2]/div/div/div[2]/div/div[2]/div/div[1]/div[1]/a/div/div/div[1]/div[1]'
+    AirlineNameXPATH = '//*[@id="listWrapper"]/div/div[2]/div/div[2]/div[2]/div/div/div[1]/div[3]/div/div/div[1]'
+    TotalPricePerPersonXPATH = '//*[@id="listWrapper"]/div/div[2]/div/div[2]/div[2]/div/div/div[2]/div/div[2]/div/div[1]/div[1]/a/div/div/div[1]/div[1]'
+
 
 #URL Setting
-url = f"https://www.tw.kayak.com/flights/{depart_city}-{arrive_city}/{depart_time}/{arrive_time}/{cabinclass}/{adult}/{student}/{children}?{fdDir}"
+url = f"https://www.tw.kayak.com/flights/{depart_city}-{arrive_city}/{depart_time}/{arrive_time}/{cabinclass}/{adult}/{student}/{children}?fs=cabin=-m;{fdDir}"
 url_Price = url + "&sort=price_a" # 價格優先排序
 url_Best = url + "&sort=bestflight_a" # 超值優先排序
 url_Duration = url + "&sort=duration_a" # 最快優先排序
@@ -107,26 +136,38 @@ browser.get(url)
 sleep(10)
 
 def get_Flight_Result(): # 獲取所需資訊
-    info_GoTripDepartTime = browser.find_element(By.XPATH,GoTripDepartTimeXPATH).text                   # 去程出發時間
-    info_GoTripArriveTime = browser.find_element(By.XPATH,GoTripArriveTimeXPATH).text                   # 去程抵達時間
-    info_GoTripDepartAirport = browser.find_element(By.XPATH,GoTripDepartAirportXPATH).text             # 去程出發機場
-    info_GoTripArriveAirport = browser.find_element(By.XPATH,GoTripArriveAirportXPATH).text             # 去程抵達機場
-    info_GoTripDirectFlightOrNot = browser.find_element(By.XPATH,GoTripDirectFlightOrNotXPATH).text     # 去程航班直飛與否?
-    info_GoTripTotalTime = browser.find_element(By.XPATH,GoTripTotalTimeXPATH).text                     # 去程總時長
-    info_BackTripDepartTime = browser.find_element(By.XPATH,BackTripDepartTimeXPATH).text               # 返程出發時間
-    info_BackTripArriveTime = browser.find_element(By.XPATH,BackTripArriveTimeXPATH).text               # 返程抵達時間
-    info_BackTripDepartAirport = browser.find_element(By.XPATH,BackTripDepartAirportXPATH).text         # 返程出發機場
-    info_BackTripArriveAirport = browser.find_element(By.XPATH,BackTripArriveAirportXPATH).text         # 返程抵達機場
-    info_BackTripDirectFlightOrNot = browser.find_element(By.XPATH,BackTripDirectFlightOrNotXPATH).text # 返程直飛與否?
-    info_BackTripTotalTime = browser.find_element(By.XPATH,BackTripTotalTimeXPATH).text                 # 返程總時長
-    info_AirlineName = browser.find_element(By.XPATH,AirlineNameXPATH).text                             # 航空公司名
-    info_TotalPricePerPerson = browser.find_element(By.XPATH,TotalPricePerPersonXPATH).text             # 總價格(/人)
-
     if numOfStudent >= 1:   # 查詢條件中包含學生，需要驗證以獲取學生票價 => 回傳已通知使用者
         info_StudentOrNot = "**查詢條件中包含學生，需要驗證以獲取學生票價**\n" 
     else:
         info_StudentOrNot = ""
-    flightResult = f'''{info_StudentOrNot}去程\n時間:{info_GoTripDepartTime}-{info_GoTripArriveTime}\n出發機場:{info_GoTripDepartAirport}\n目的地機場:{info_GoTripArriveAirport}\n直飛航班or轉機:{info_GoTripDirectFlightOrNot}\n總飛行時間:{info_GoTripTotalTime}
+
+    if arrive_time == "":   # 單向航程
+        info_GoTripDepartTime = browser.find_element(By.XPATH,GoTripDepartTimeXPATH).text                   # 去程出發時間
+        info_GoTripArriveTime = browser.find_element(By.XPATH,GoTripArriveTimeXPATH).text                   # 去程抵達時間
+        info_GoTripDepartAirport = browser.find_element(By.XPATH,GoTripDepartAirportXPATH).text             # 去程出發機場
+        info_GoTripArriveAirport = browser.find_element(By.XPATH,GoTripArriveAirportXPATH).text             # 去程抵達機場
+        info_GoTripDirectFlightOrNot = browser.find_element(By.XPATH,GoTripDirectFlightOrNotXPATH).text     # 去程航班直飛與否?
+        info_GoTripTotalTime = browser.find_element(By.XPATH,GoTripTotalTimeXPATH).text                     # 去程總時長
+        info_AirlineName = browser.find_element(By.XPATH,AirlineNameXPATH).text                             # 航空公司名
+        info_TotalPricePerPerson = browser.find_element(By.XPATH,TotalPricePerPersonXPATH).text             # 總價格(/人)
+        flightResult = f'''{info_StudentOrNot}去程\n時間:{info_GoTripDepartTime}-{info_GoTripArriveTime}\n出發機場:{info_GoTripDepartAirport}\n目的地機場:{info_GoTripArriveAirport}\n直飛航班or轉機:{info_GoTripDirectFlightOrNot}\n總飛行時間:{info_GoTripTotalTime}
+====================\n航空公司:{info_AirlineName}\n價格:{info_TotalPricePerPerson}/人\n'''
+    else:   # 雙向航程
+        info_GoTripDepartTime = browser.find_element(By.XPATH,GoTripDepartTimeXPATH).text                   # 去程出發時間
+        info_GoTripArriveTime = browser.find_element(By.XPATH,GoTripArriveTimeXPATH).text                   # 去程抵達時間
+        info_GoTripDepartAirport = browser.find_element(By.XPATH,GoTripDepartAirportXPATH).text             # 去程出發機場
+        info_GoTripArriveAirport = browser.find_element(By.XPATH,GoTripArriveAirportXPATH).text             # 去程抵達機場
+        info_GoTripDirectFlightOrNot = browser.find_element(By.XPATH,GoTripDirectFlightOrNotXPATH).text     # 去程航班直飛與否?
+        info_GoTripTotalTime = browser.find_element(By.XPATH,GoTripTotalTimeXPATH).text                     # 去程總時長
+        info_BackTripDepartTime = browser.find_element(By.XPATH,BackTripDepartTimeXPATH).text               # 返程出發時間
+        info_BackTripArriveTime = browser.find_element(By.XPATH,BackTripArriveTimeXPATH).text               # 返程抵達時間
+        info_BackTripDepartAirport = browser.find_element(By.XPATH,BackTripDepartAirportXPATH).text         # 返程出發機場
+        info_BackTripArriveAirport = browser.find_element(By.XPATH,BackTripArriveAirportXPATH).text         # 返程抵達機場
+        info_BackTripDirectFlightOrNot = browser.find_element(By.XPATH,BackTripDirectFlightOrNotXPATH).text # 返程直飛與否?
+        info_BackTripTotalTime = browser.find_element(By.XPATH,BackTripTotalTimeXPATH).text                 # 返程總時長
+        info_AirlineName = browser.find_element(By.XPATH,AirlineNameXPATH).text                             # 航空公司名
+        info_TotalPricePerPerson = browser.find_element(By.XPATH,TotalPricePerPersonXPATH).text             # 總價格(/人)
+        flightResult = f'''{info_StudentOrNot}去程\n時間:{info_GoTripDepartTime}-{info_GoTripArriveTime}\n出發機場:{info_GoTripDepartAirport}\n目的地機場:{info_GoTripArriveAirport}\n直飛航班or轉機:{info_GoTripDirectFlightOrNot}\n總飛行時間:{info_GoTripTotalTime}
 ====================\n返程\n時間:{info_BackTripDepartTime}-{info_BackTripArriveTime}\n出發機場:{info_BackTripDepartAirport}\n目的地機場:{info_BackTripArriveAirport}\n直飛航班or轉機:{info_BackTripDirectFlightOrNot}\n總飛行時間:{info_BackTripTotalTime}
 ====================\n航空公司:{info_AirlineName}\n價格:{info_TotalPricePerPerson}/人\n'''
     print(flightResult)
